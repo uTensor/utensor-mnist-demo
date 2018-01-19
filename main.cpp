@@ -3,13 +3,12 @@
 #include "stm32f413h_discovery_ts.h"
 #include "stm32f413h_discovery_lcd.h"
 #include "FATFileSystem.h"
-#include "SDBlockDevice.h"
+#include "F413ZH_SD_BlockDevice.h"
 #include "tensor.hpp"
 #include "deep_mnist_mlp.hpp"
 
 Serial pc(USBTX, USBRX, 115200);
-SDBlockDevice bd(MBED_CONF_APP_SD_MOSI, MBED_CONF_APP_SD_MISO,
-                 MBED_CONF_APP_SD_CLK, MBED_CONF_APP_SD_CS);
+F413ZH_SD_BlockDevice bd;
 FATFileSystem fs("fs");
 
 TS_StateTypeDef  TS_State = {0};
@@ -19,10 +18,9 @@ int main()
     uint16_t x1, y1;
     pc.printf("program start...\r\n");
 
-    pc.printf("SDBlockDevice init \r\n");
-    bd.init();
-    pc.printf("Mounting the filesystem on \"/fs\". ");
-    fs.mount(&bd);
+    ON_ERR(bd.init(), "SDBlockDevice init ");
+    ON_ERR(fs.mount(&bd), "Mounting the filesystem on \"/fs\". ");
+    pc.printf("Inferencing...\r\n");
 
     int prediction = runMLP("/fs/testData/deep_mlp/import-Placeholder_0.idx");
     pc.printf("prediction: %d\r\n\r\n\r\n\r\n", prediction);

@@ -39,12 +39,6 @@
             "sd-miso": "D12",
             "sd-clk": "D13",
             "sd-cs": "D9"
-        },
-        "DISCO_F413ZH": {
-            "sd-mosi": "PA_6",
-            "sd-miso": "PC_8",
-            "sd-clk": "PC_12",
-            "sd-cs": "PF_11"
         }
     }
 }
