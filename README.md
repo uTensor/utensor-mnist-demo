@@ -6,12 +6,13 @@ Handwritten digit recognition demo
 - SD Card (see SD card section)
 
 # Build Instruction
+- import the project:
+`mbed import https://github.com/ARMmbed/mnist`
 - Loading the SD card
 - Copy from `uTensor/TESTS/scripts/PRE-GEN/deep-mlp` to `/fs/testData/deep-mlp`
 - Insert it to DISCO_F413ZH
 - Build commands:
 ```
-mbed import https://github.com/ARMmbed/mnist
 mbed compile -m DISCO_F413ZH -t GCC_ARM --profile=uTensor.git/build_profile/release.json -f
 ```
 
