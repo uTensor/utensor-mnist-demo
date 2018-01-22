@@ -11,6 +11,11 @@ class Image {
 		int xDim;
 		int yDim;
 		bool dimOverride = false;
+
+        void put_pixel(int x, int y){
+            if(x >= 0 && x < get_xDim() && y >= 0 && y < get_yDim())
+                this->operator()(x, y) = 255;
+        }
 	public:
 
 		Image(uint32_t x, uint32_t y){
@@ -46,6 +51,76 @@ class Image {
 			else 
 				return yDim;
 		}
+        void drawline(int x0, int y0, int x1, int y1)
+        {
+            int dx, dy, p, x, y;
+        
+            dx=x1-x0;
+            dy=y1-y0;
+        
+            x=x0;
+            y=y0;
+        
+            p=2*dy-dx;
+        
+            while(x<x1)
+            {
+                if(p>=0)
+                {
+                    put_pixel(x,y);
+                    y=y+1;
+                    p=p+2*dy-2*dx;
+                }
+                else
+                {
+                    put_pixel(x,y);
+                    p=p+2*dy;
+                }
+                x=x+1;
+            }
+        }
+        void draw_circle(int x0, int y0, int radius){
+            int x = radius-1;
+            int y = 0;
+            int dx = 1;
+            int dy = 1;
+            int err = dx - (radius << 1);
+
+            while (x >= y)
+            {
+                /* Hole version
+                put_pixel(x0 + x, y0 + y);
+                put_pixel(x0 - x, y0 + y);
+                
+                put_pixel(x0 + y, y0 + x);
+                put_pixel(x0 - y, y0 + x);
+                
+                put_pixel(x0 - x, y0 - y);
+                put_pixel(x0 + x, y0 - y);
+                
+                put_pixel(x0 - y, y0 - x);
+                put_pixel(x0 + y, y0 - x);
+                */
+                drawline(x0 - x, y0 + y, x0 + x, y0 + y);
+                drawline(x0 - y, y0 + x, x0 + y, y0 + x);
+                drawline(x0 - x, y0 - y, x0 + x, y0 - y);
+                drawline(x0 - y, y0 - x, x0 + y, y0 - x);
+
+                if (err <= 0)
+                {
+                    y++;
+                    err += dy;
+                    dy += 2;
+                }
+                else
+                {
+                    x--;
+                    dx += 2;
+                    err += dx - (radius << 1);
+                }
+            }
+
+        }
 
 		~Image(){
 			delete data;
@@ -179,17 +254,4 @@ Image<T> pad(const Image<T>& img, int padX, int padY){
 
 }
 
-template<typename T>
-void printImage(const Image<T>& img){
-    cout << "{\n";
-    for(int i = 0; i < img.get_xDim(); i++){
-        cout << "[ ";
-        for(int j = 0; j < img.get_yDim(); j++){
-            cout << img(i,j) << ", ";
-        }
-        cout << "]" << std::endl;
-    }
-    cout << "}\n";
-
-}
 #endif
