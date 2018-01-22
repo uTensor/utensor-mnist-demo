@@ -127,17 +127,30 @@ int main()
             //smallImage = pad(resize(chop(smallImage), 20, 20), 4, 4);
             Image<float> img28_2 = box_blur(img28);
             pc.printf("Done blurring\n\r");
-            img28.~Image<float>();
+            //img28.~Image<float>();
 
             //printImage(img28_2);
             pc.printf("Reshaping\n\r");
-            img28_2.get_data()->resize({1, 784});
+            img28.get_data()->resize({1, 784});
             pc.printf("Creating Graph\n\r");
-            get_deep_mlp_ctx(ctx, img28_2.get_data());
+
+            get_deep_mlp_ctx(ctx, img28.get_data());
             pc.printf("Evaluating\n\r");
             ctx.eval();
             S_TENSOR prediction = ctx.get({"y_pred:0"});
-            pc.printf("Number guessed %d\n\r", *(prediction->read<int>(0,0)));
+            int result = *(prediction->read<int>(0,0));
+            //printImage(img28);
+            //int result = runMLP(img28.get_data());
+            
+            pc.printf("Number guessed %d\n\r", result);
+
+            BSP_LCD_Clear(LCD_COLOR_WHITE);
+            BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+            BSP_LCD_SetFont(&Font24);
+            uint8_t number[2];
+            number[1] = 0;
+            number[0] = 48 + result;
+            BSP_LCD_DisplayStringAt(0, 120, number, CENTER_MODE);
             trigger_inference = false;
             img = new Image<float>(240, 240);
             clear(*img);
@@ -151,7 +164,7 @@ int main()
             y1 = TS_State.touchY[0];
             //printf("Touch Detected x=%d y=%d\n", x1, y1);
             //(*img)((int) x1, (int) y1) = 255;
-            img->draw_circle(y1, x1, 7); //Screen not in image x,y format. Must transpose
+            img->draw_circle(x1, y1, 7); //Screen not in image x,y format. Must transpose
 
             BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
             BSP_LCD_FillCircle(x1, y1, 5);
