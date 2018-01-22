@@ -50,15 +50,16 @@ Image<T> box_blur(const Image<T>& img){
     clear(tmp);
     for(int i = 4; i < img.get_xDim() - 4; i++){
         for(int j = 4; j < img.get_yDim() - 4; j++){
-            for(int ii = -1; ii < 2; ii++){
-                for(int jj = -1; jj < 2; jj++){
-                    tmp(i,j) += img(i+ii, j+jj);
-                }
-            }
-            //tmp(i,j) = img(i-1, j-1) + img(i, j-1) + img(i+1, j-1) +
-            //           img(i-1, j) + img(i, j) + img(i+1, j) + 
-            //           img(i-1, j+1) + img(i, j+1) + img(i+1, j+1);
-            tmp(i,j) /= 9.0;
+            //for(int ii = -1; ii < 2; ii++){
+            //    for(int jj = -1; jj < 2; jj++){
+            //        tmp(i,j) += img(i+ii, j+jj);
+            //    }
+            //}
+            tmp(i,j) = img(i-1, j-1) + img(i, j-1) + img(i+1, j-1) +
+                       img(i-1, j) + 3.0*img(i, j) + img(i+1, j) + 
+                       img(i-1, j+1) + img(i, j+1) + img(i+1, j+1);
+            tmp(i,j) /= 11.0;
+            //tmp(i,j) /= 9.0;
         }
     }
 
@@ -128,7 +129,7 @@ int main()
             pc.printf("Done blurring\n\r");
             img28.~Image<float>();
 
-            printImage(img28_2);
+            //printImage(img28_2);
             pc.printf("Reshaping\n\r");
             img28_2.get_data()->resize({1, 784});
             pc.printf("Creating Graph\n\r");
