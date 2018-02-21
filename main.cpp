@@ -126,7 +126,7 @@ int main()
             get_deep_mlp_ctx(ctx, img28_2.get_data());
             pc.printf("Evaluating\n\r");
             ctx.eval();
-            S_TENSOR prediction = ctx.get({"y_pred:0"});
+            S_TENSOR prediction = ctx.get({"Prediction/y_pred:0"});
             int result = *(prediction->read<int>(0,0));
             
             pc.printf("Number guessed %d\n\r", result);
@@ -134,8 +134,11 @@ int main()
             BSP_LCD_Clear(LCD_COLOR_WHITE);
             BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
             BSP_LCD_SetFont(&Font24);
+
+            // Create a cstring
             uint8_t number[2];
-            number[1] = 0;
+            number[1] = '\0';
+            //ASCII numbers are 48 + the number, a neat trick
             number[0] = 48 + result;
             BSP_LCD_DisplayStringAt(0, 120, number, CENTER_MODE);
             trigger_inference = false;
