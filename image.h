@@ -2,7 +2,7 @@
 #define IMAGE_H
 
 #include <vector>
-#include "utensor/tensor.hpp"
+#include "tensor.hpp"
 
 template<typename T, template<typename> typename TENSOR=RamTensor>
 class Image {
