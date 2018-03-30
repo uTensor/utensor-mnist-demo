@@ -123,10 +123,10 @@ int main()
             img28_2.get_data()->resize({1, 784});
             pc.printf("Creating Graph\n\r");
 
-            get_deep_mlp_ctx(ctx, img28_2.get_data());
+            get_quant_model_ctx(ctx, img28_2.get_data());
             pc.printf("Evaluating\n\r");
             ctx.eval();
-            S_TENSOR prediction = ctx.get({"y_pred:0"});
+            S_TENSOR prediction = ctx.get({"Prediction/y_pred:0"});
             int result = *(prediction->read<int>(0,0));
             
             pc.printf("Number guessed %d\n\r", result);
