@@ -98,32 +98,32 @@ int main()
         BSP_TS_GetState(&TS_State);
         if(trigger_inference){
             
-            Image<float> smallImage = resize(*img, 64, 64);
+            Image<float> smallImage = resize(*img, 28, 28);
 
 
-            Image<float> chopped = chop(smallImage);
-            pc.printf("Done chopping\n\n");
-            Image<float> img20   = resize(chopped, 20, 20);
-            pc.printf("Done resizing\n\n");
-            Image<float> img28   = pad(img20, 4, 4);
+            // Image<float> chopped = chop(smallImage);
+            // pc.printf("Done chopping\n\n");
+            // Image<float> img20   = resize(chopped, 20, 20);
+            // pc.printf("Done resizing\n\n");
+            // Image<float> img28   = pad(img20, 4, 4);
             
             // Image processing is heavy on constrained devices
             // manually delete
             pc.printf("Done padding\n\n");
-            smallImage.~Image<float>();
-            chopped.~Image<float>();
-            img20.~Image<float>();
+            // smallImage.~Image<float>();
+            // chopped.~Image<float>();
+            // img20.~Image<float>();
             delete img;
 
-            Image<float> img28_2 = box_blur(img28);
-            pc.printf("Done blurring\n\r");
-            img28.~Image<float>();
+            // Image<float> img28_2 = box_blur(smallImage);
+            // pc.printf("Done blurring\n\r");
+            // img28.~Image<float>();
 
             pc.printf("Reshaping\n\r");
-            img28_2.get_data()->resize({1, 784});
+            smallImage.get_data()->resize({1, 784});
             pc.printf("Creating Graph\n\r");
 
-            get_quant_model_ctx(ctx, img28_2.get_data());
+            get_quant_model_ctx(ctx, smallImage.get_data());
             pc.printf("Evaluating\n\r");
             ctx.eval();
             S_TENSOR prediction = ctx.get({"Prediction/y_pred:0"});
