@@ -6,22 +6,17 @@ Handwritten digit recognition demo
 - SD Card (see SD card section)
 
 # Build Instruction
-- import the project:
-`mbed import https://github.com/ARMmbed/mnist`
-- Loading the SD card
-- Copy from `utensor/TESTS/scripts/PRE-GEN/deep-mlp` to `/fs/testData/deep-mlp`
+- clone the project
+- run `mbed deploy`
+- Copy from `sd_card` to the root of your SD card
 - Insert it to DISCO_F413ZH
 - Build commands:
 ```
 mbed compile -m DISCO_F413ZH -t GCC_ARM --profile=utensor/build_profile/release.json -f
 ```
 
-# Expected Outputs
-Serial Baud Rate: 115200
-```
-program start...
-Inferencing...
-PASSED 0.00000000
-
-prediction: 7
-```
+# Usage
+- Wait for the LCD to initialize
+- Draw a digit on the screen
+- Press the User Button
+- Press Rest to restart
