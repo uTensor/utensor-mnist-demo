@@ -1,0 +1,11 @@
+{
+    "compiler-args": [
+        "-std=c++11",
+        "--preload-file", "sdcard@/fs"
+    ],
+    "emterpretify": true,
+    "ignore": [
+        "./BSP_DISCO_F413ZH",
+        "./F413ZH_SD_BlockDevice"
+    ]
+}
