@@ -22,6 +22,10 @@
         }
     },
     "target_overrides": {
+        "*": {
+            "platform.stdio-baud-rate": 115200,
+            "platform.stdio-convert-newlines": true
+        },
         "K64F": {
             "sd-mosi": "PTE3",
             "sd-miso": "PTE1",
