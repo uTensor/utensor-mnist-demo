@@ -19,6 +19,8 @@ Running artificial intelligence on embedded systems involves 3 main steps.
 - SD Card (see SD card section)
 - [mbed-cli](https://os.mbed.com/docs/v5.7/tools/installation-and-setup.html)
 - [uTensor-cli](https://github.com/uTensor/utensor_cgen) `pip install utensor-cgen`
+- [Tensorflow 1.6+](https://www.tensorflow.org/install)
+
 
 ## Build Instruction
 1. Import the project:
