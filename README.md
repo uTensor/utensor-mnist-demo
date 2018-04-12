@@ -30,27 +30,31 @@ mbed import https://github.com/uTensor/utensor-mnist-demo
 The process of training and validating the model is exactly the same as in traditional machine learning workflows. This example trains a fully connected neural net with two hidden layers to recognize handwritten digits from the MNIST dataset, but you can apply the concepts to an application of your choice.
 
 In preparation for code generation, you must freeze the TensorFlow model. Freezing a model stores learned graph parameters in a protobuf file.
-2. Train the tensorflow model
+
+
+1. Train the tensorflow model
     1. Launch IPython `jupyter notebook` ![Launch the notebook](https://github.com/uTensor/utensor-mnist-demo/blob/quickstart/docs/images/jupyter.png)
     1. Open the `tensorflow-models/deep_mlp.ipynb`
     1. Select `Kernel/Restart & Run All`. This will build a 2 layer NN then train, quantize, and saves the model in `tensorflow-models/my-model/deep_mlp.pb`.
     ![Run the IPython notebook](https://github.com/uTensor/utensor-mnist-demo/blob/quickstart/docs/images/kernel.png)
 
 ### Generate embedded C++ code
-3. You can get the output node names from the IPython notebook. This will create a `models` and `constants` directory. `models` contains the embedded code interface for making inferences in your applications, and `constants` contains the *learned* weights associated with each stage in the neural net.
+
+You can get the output node names from the IPython notebook. This will create a `models` and `constants` directory. `models` contains the embedded code interface for making inferences in your applications, and `constants` contains the *learned* weights associated with each stage in the neural net.
+
 ```
 utensor-cli --output-nodes Prediction/y_pred tensorflow-models/my-model/deep_mlp.pb
 ```
 ### Prepare the mbed project
 This example builds a handwriting recognition application using Mbed and the generated model, but you can apply these concepts to your own projects and platforms. This example uses the \texttt{ST-Discovery-F413H} because it has a touch screen and SD card built in, but you could just as easily build the application using plug-in components.
 
-4. Copy the constants folder to your SD card, and insert SD card in board.
-5. Run `mbed deploy`, this fetches the necessary libraries like uTensor
-6. Build the mbed project:
+1. Copy the constants folder to your SD card, and insert SD card in board.
+1. Run `mbed deploy`, this fetches the necessary libraries like uTensor
+1. Build the mbed project:
 ```
 mbed compile -m DISCO_F413ZH -t GCC_ARM --profile=utensor/build_profile/release.json -f
 ```
-7. Finally flash your device by dragging and dropping the binary from `BUILD/DISCO_F413ZH/GCC_ARM/utensor-mnist-demo.bin` to your device.
+1. Finally flash your device by dragging and dropping the binary from `BUILD/DISCO_F413ZH/GCC_ARM/utensor-mnist-demo.bin` to your device.
 
 # Playing with the application
 After drawing a number on the screen press the blue button to run inference, uTensor should output its prediction in the middle of the screen. Then press the reset button.  
