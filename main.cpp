@@ -123,7 +123,7 @@ int main()
             smallImage.get_data()->resize({1, 784});
             pc.printf("Creating Graph\n\r");
 
-            get_quant_model_ctx(ctx, smallImage.get_data());
+            get_deep_mlp_ctx(ctx, smallImage.get_data());
             pc.printf("Evaluating\n\r");
             ctx.eval();
             S_TENSOR prediction = ctx.get({"Prediction/y_pred:0"});
