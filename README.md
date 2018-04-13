@@ -60,3 +60,4 @@ mbed compile -m DISCO_F413ZH -t GCC_ARM --profile=utensor/build_profile/release.
 
 # Playing with the application
 After drawing a number on the screen press the blue button to run inference, uTensor should output its prediction in the middle of the screen. Then press the reset button.  
+[![Whoops! Failed loading video](https://img.youtube.com/vi/FhbCAd0sO1c/0.jpg)](https://www.youtube.com/watch?v=FhbCAd0sO1c)
