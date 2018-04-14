@@ -63,8 +63,8 @@ def main(_):
   y_pred = deepnn(x)
 
   with tf.name_scope("Loss"):
-    cross_entropy = tf.nn.softmax_cross_entropy_with_logits(labels=y_, 
-                                                            logits=y_pred)
+    cross_entropy = tf.nn.softmax_cross_entropy_with_logits_v2(labels=y_, 
+                                                               logits=y_pred)
     loss = tf.reduce_mean(cross_entropy, name="cross_entropy_loss")
   train_step = tf.train.AdamOptimizer(1e-4).minimize(loss, name="train_step")
 
@@ -80,7 +80,7 @@ def main(_):
 
     # SGD
     for i in range(1, FLAGS.num_iter + 1):
-      batch_images, batch_labels = mnist.train.next_batch(50)
+      batch_images, batch_labels = mnist.train.next_batch(FLAGS.batch_size)
       feed_dict = {x: batch_images, y_: batch_labels}
       train_step.run(feed_dict=feed_dict)
       if i % FLAGS.log_iter == 0:
@@ -126,6 +126,9 @@ if __name__ == '__main__':
                       dest='num_iter',
                       default=20000,
                       help='number of iterations (default: %(default)s)')
+  parser.add_argument('--batch-size', dest='batch_size',
+                      default=50, type=int,
+                      help='batch size (default: %(default)s)')
   parser.add_argument('--log-every-iters', type=int,
                       dest='log_iter', default=1000,
                       help='logging the training accuracy per numbers of iteration %(default)s')
