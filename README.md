@@ -21,6 +21,9 @@ Running artificial intelligence on embedded systems involves 3 main steps.
 - [uTensor-cli](https://github.com/uTensor/utensor_cgen) `pip install utensor-cgen`
 - [Tensorflow 1.6+](https://www.tensorflow.org/install)
 
+### Note for Windows users
+*NOTE*: if you are running Windows then you must have Python3 installed and set as your default python instance. Tensorflow 1.2+ does not support Python 2.7 on Windows, and only officially supports Python 3.5 and 3.6.
+
 
 ## Build Instruction
 1. Import the project:
