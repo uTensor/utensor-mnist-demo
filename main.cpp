@@ -4,9 +4,8 @@
 #include "stm32f413h_discovery_lcd.h"
 #include "FATFileSystem.h"
 #include "F413ZH_SD_BlockDevice.h"
-#include "tensor.hpp"
+#include "uTensor/core/tensor.hpp"
 #include "image.h"
-#include "deep_mnist_mlp.hpp"
 #include "models/deep_mlp.hpp"
 
 Serial pc(USBTX, USBRX, 115200);

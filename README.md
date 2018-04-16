@@ -37,18 +37,19 @@ The process of training and validating the model is exactly the same as in tradi
 In preparation for code generation, you must freeze the TensorFlow model. Freezing a model stores learned graph parameters in a protobuf file.
 
 
-1. Train the tensorflow model
-    1. Launch IPython `jupyter notebook` ![Launch the notebook](https://github.com/uTensor/utensor-mnist-demo/blob/quickstart/docs/images/jupyter.png)
-    1. Open the `tensorflow-models/deep_mlp.ipynb`
-    1. Select `Kernel/Restart & Run All`. This will build a 2 layer NN then train, quantize, and saves the model in `tensorflow-models/my-model/deep_mlp.pb`.
-    ![Run the IPython notebook](https://github.com/uTensor/utensor-mnist-demo/blob/quickstart/docs/images/kernel.png)
+- Train the tensorflow model
+  1. go to `tensorflow-models/`
+  2. run `python deep_mlp.py`
+    - `python deep_mlp.py -h` for help
+  3. training process should start immediately
+  <img alt=train-mlp src=docs/images/train_mlp.png width=400/>
 
 ### Generate embedded C++ code
 
 You can get the output node names from the IPython notebook. This will create a `models` and `constants` directory. `models` contains the embedded code interface for making inferences in your applications, and `constants` contains the *learned* weights associated with each stage in the neural net.
 
 ```
-utensor-cli --output-nodes Prediction/y_pred tensorflow-models/my-model/deep_mlp.pb
+utensor-cli tensorflow-models/deep_mlp.pb
 ```
 ### Prepare the mbed project
 This example builds a handwriting recognition application using Mbed and the generated model, but you can apply these concepts to your own projects and platforms. This example uses the \texttt{ST-Discovery-F413H} because it has a touch screen and SD card built in, but you could just as easily build the application using plug-in components.

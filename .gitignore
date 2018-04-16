@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# virtualenv
+venv
+.venv
+
+# misc
+mnist_data
+chkps
+*_model

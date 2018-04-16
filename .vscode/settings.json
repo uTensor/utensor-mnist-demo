@@ -1,0 +1,9 @@
+{
+    "[python]" : {
+        "editor.formatOnSave": false,
+    },
+    "python.linting.flake8Args": [
+        "--ignore=E501,F401,E402,F403,F811,C901,E111,E114"
+    ],
+    "python.pythonPath": "venv/bin/python"
+}
