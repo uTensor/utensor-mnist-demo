@@ -42,7 +42,7 @@ def deepnn(x):
     a_fc2 = tf.add(tf.matmul(h_fc1, W_fc2), b_fc2, name="zscore")
     h_fc2 = tf.nn.relu(a_fc2)
 
-  with tf.name_scope("OuputLayer"):
+  with tf.name_scope("OutputLayer"):
     W_fc3 = weight_variable([64, 10], name='W_fc3')
     b_fc3 = bias_variable([10], name='b_fc3')
     logits = tf.add(tf.matmul(h_fc2, W_fc3), b_fc3, name="logits")

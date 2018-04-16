@@ -125,7 +125,7 @@ int main()
             get_deep_mlp_ctx(ctx, smallImage.get_data());
             pc.printf("Evaluating\n\r");
             ctx.eval();
-            S_TENSOR prediction = ctx.get({"Prediction/y_pred:0"});
+            S_TENSOR prediction = ctx.get({"OutputLayer/y_pred:0"});
             int result = *(prediction->read<int>(0,0));
             
             pc.printf("Number guessed %d\n\r", result);
