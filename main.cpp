@@ -40,25 +40,25 @@ void printImage(const Image<T>& img){
     }
 }
 
-/**
- * Simple box filter with extra weight on the center element.
- * Blurs the image to make it more realistic.
- */
-template<typename T>
-Image<T> box_blur(const Image<T>& img){
-    Image<T> tmp(img.get_xDim(), img.get_yDim());
-    clear(tmp);
-    for(int i = 4; i < img.get_xDim() - 4; i++){
-        for(int j = 4; j < img.get_yDim() - 4; j++){
-            tmp(i,j) = img(i-1, j-1) + img(i, j-1) + img(i+1, j-1) +
-                       img(i-1, j) + 3.0*img(i, j) + img(i+1, j) + 
-                       img(i-1, j+1) + img(i, j+1) + img(i+1, j+1);
-            tmp(i,j) /= 11.0;
-        }
-    }
+// /**
+//  * Simple box filter with extra weight on the center element.
+//  * Blurs the image to make it more realistic.
+//  */
+// template<typename T>
+// Image<T> box_blur(const Image<T>& img){
+//     Image<T> tmp(img.get_xDim(), img.get_yDim());
+//     clear(tmp);
+//     for(int i = 4; i < img.get_xDim() - 4; i++){
+//         for(int j = 4; j < img.get_yDim() - 4; j++){
+//             tmp(i,j) = img(i-1, j-1) + img(i, j-1) + img(i+1, j-1) +
+//                        img(i-1, j) + 3.0*img(i, j) + img(i+1, j) + 
+//                        img(i-1, j+1) + img(i, j+1) + img(i+1, j+1);
+//             tmp(i,j) /= 11.0;
+//         }
+//     }
 
-    return tmp;
-}
+//     return tmp;
+// }
 
 
 int main()
@@ -125,7 +125,7 @@ int main()
             get_deep_mlp_ctx(ctx, smallImage.get_data());
             pc.printf("Evaluating\n\r");
             ctx.eval();
-            S_TENSOR prediction = ctx.get({"Prediction/y_pred:0"});
+            S_TENSOR prediction = ctx.get({"OutputLayer/y_pred:0"});
             int result = *(prediction->read<int>(0,0));
             
             pc.printf("Number guessed %d\n\r", result);
