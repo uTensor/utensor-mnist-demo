@@ -22,7 +22,8 @@ Running artificial intelligence on embedded systems involves 3 main steps.
 - [Tensorflow 1.6+](https://www.tensorflow.org/install)
 
 ### Note for Windows users
-*NOTE*: if you are running Windows then you must have Python3 installed and set as your default python instance. Tensorflow 1.2+ does not support Python 2.7 on Windows, and only officially supports Python 3.5 and 3.6.
+*NOTE*: Windows is not currently supported, but there is a workaround. If you are running Windows then you must have both Python2 and Python3 installed. Tensorflow 1.2+ does not support Python 2.7 on Windows, and only officially supports Python 3.5 and 3.6. Meanwhile, mbed officially supports Python2 and has limited support for Python3.
+You can get the demo working by running the Ipython notebook with the Python3 kernel, and the mbed project build with Python2.
 
 
 ## Build Instruction
