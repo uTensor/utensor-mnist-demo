@@ -56,7 +56,7 @@ You can get the output node names from the IPython notebook. This will create a 
 utensor-cli --output-nodes=OutputLayer/y_pred tensorflow-models/mnist_model/deep_mlp.pb
 ```
 ### Prepare the mbed project
-This example builds a handwriting recognition application using Mbed and the generated model, but you can apply these concepts to your own projects and platforms. This example uses the \texttt{ST-Discovery-F413H} because it has a touch screen and SD card built in, but you could just as easily build the application using plug-in components.
+This example builds a handwriting recognition application using Mbed and the generated model, but you can apply these concepts to your own projects and platforms. This example uses the **ST-Discovery-F413H** because it has a touch screen and SD card built in, but you could just as easily build the application using plug-in components.
 
 1. Copy the constants folder to your SD card, and insert SD card in board.
 1. Run `mbed deploy`, this fetches the necessary libraries like uTensor
