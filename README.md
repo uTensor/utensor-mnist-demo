@@ -70,3 +70,5 @@ This example builds a handwriting recognition application using Mbed and the gen
 # Playing with the application
 After drawing a number on the screen press the blue button to run inference, uTensor should output its prediction in the middle of the screen. Then press the reset button.  
 [![Whoops! Failed loading video](https://img.youtube.com/vi/FhbCAd0sO1c/0.jpg)](https://www.youtube.com/watch?v=FhbCAd0sO1c)
+
+*Note*: The model used in training is very simple and has suboptimal accuracy in practice. 
