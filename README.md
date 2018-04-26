@@ -21,6 +21,10 @@ Running artificial intelligence on embedded systems involves 3 main steps.
 - [uTensor-cli](https://github.com/uTensor/utensor_cgen) `pip install utensor-cgen`
 - [Tensorflow 1.6+](https://www.tensorflow.org/install)
 
+### Note for Windows users
+*NOTE*: Windows is not currently supported, but there is a workaround. If you are running Windows then you must have both Python2 and Python3 installed. Tensorflow 1.2+ does not support Python 2.7 on Windows, and only officially supports Python 3.5 and 3.6. Meanwhile, mbed officially supports Python2 and has limited support for Python3.
+You can get the demo working by running the Ipython notebook with the Python3 kernel, and the mbed project build with Python2.
+
 
 ## Build Instruction
 1. Import the project:
@@ -58,7 +62,7 @@ You can get the output node names from the IPython notebook. This will create a 
 utensor-cli --output-nodes=OutputLayer/y_pred tensorflow-models/mnist_model/deep_mlp.pb
 ```
 ### Prepare the mbed project
-This example builds a handwriting recognition application using Mbed and the generated model, but you can apply these concepts to your own projects and platforms. This example uses the \texttt{ST-Discovery-F413H} because it has a touch screen and SD card built in, but you could just as easily build the application using plug-in components.
+This example builds a handwriting recognition application using Mbed and the generated model, but you can apply these concepts to your own projects and platforms. This example uses the **ST-Discovery-F413H** because it has a touch screen and SD card built in, but you could just as easily build the application using plug-in components.
 
 1. Copy the constants folder to your SD card, and insert SD card in board.
 1. Run `mbed deploy`, this fetches the necessary libraries like uTensor
@@ -72,3 +76,5 @@ This example builds a handwriting recognition application using Mbed and the gen
 # Playing with the application
 After drawing a number on the screen press the blue button to run inference, uTensor should output its prediction in the middle of the screen. Then press the reset button.  
 [![Whoops! Failed loading video](https://img.youtube.com/vi/FhbCAd0sO1c/0.jpg)](https://www.youtube.com/watch?v=FhbCAd0sO1c)
+
+*Note*: The model used in training is very simple and has suboptimal accuracy in practice. 
