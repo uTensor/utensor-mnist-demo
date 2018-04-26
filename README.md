@@ -20,6 +20,7 @@ Running artificial intelligence on embedded systems involves 3 main steps.
 - [mbed-cli](https://os.mbed.com/docs/v5.7/tools/installation-and-setup.html)
 - [uTensor-cli](https://github.com/uTensor/utensor_cgen) `pip install utensor-cgen`
 - [Tensorflow 1.6+](https://www.tensorflow.org/install)
+- [Jupyter Notebook](http://jupyter.org/) `pip install jupyter`
 
 ### Note for Windows users
 *NOTE*: Windows is not currently supported, but there is a workaround. If you are running Windows then you must have both Python2 and Python3 installed. Tensorflow 1.2+ does not support Python 2.7 on Windows, and only officially supports Python 3.5 and 3.6. Meanwhile, mbed officially supports Python2 and has limited support for Python3.
@@ -38,13 +39,14 @@ The process of training and validating the model is exactly the same as in tradi
 In preparation for code generation, you must freeze the TensorFlow model. Freezing a model stores learned graph parameters in a protobuf file.
 
 
-1. Train the tensorflow model
+1. Train the tTnsorflow model
   1. Launch IPython `jupyter notebook` ![Launch the notebook](https://github.com/uTensor/utensor-mnist-demo/blob/master/docs/images/jupyter.png)
   1. Open the `tensorflow-models/deep_mlp.ipynb`
   1. Select `Kernel/Restart & Run All`. This will build a 2 layer NN then train, quantize, and save the model in `tensorflow-models/mnist_model/deep_mlp.pb`.
   ![Run the IPython notebook](https://github.com/uTensor/utensor-mnist-demo/blob/master/docs/images/kernel.png)
-  1. go back to project root directory
+  1. Go back to project root directory
 
+*Note* If you prefer traditional Python scripts rather than notebooks, check out `tensorflow-models/deep_mlp.py`. This script contains all the same code as the notebook.
 
 ### Generate embedded C++ code
 
