@@ -4,7 +4,6 @@
 #include "stm32f413h_discovery_lcd.h"
 #include "tensor.hpp"
 #include "image.h"
-#include "deep_mnist_mlp.hpp"
 #include "models/deep_mlp.hpp"
 
 #ifndef TARGET_SIMULATOR
@@ -45,25 +44,25 @@ void printImage(const Image<T>& img){
     }
 }
 
-/**
- * Simple box filter with extra weight on the center element.
- * Blurs the image to make it more realistic.
- */
-template<typename T>
-Image<T> box_blur(const Image<T>& img){
-    Image<T> tmp(img.get_xDim(), img.get_yDim());
-    clear(tmp);
-    for(int i = 4; i < img.get_xDim() - 4; i++){
-        for(int j = 4; j < img.get_yDim() - 4; j++){
-            tmp(i,j) = img(i-1, j-1) + img(i, j-1) + img(i+1, j-1) +
-                       img(i-1, j) + 3.0*img(i, j) + img(i+1, j) +
-                       img(i-1, j+1) + img(i, j+1) + img(i+1, j+1);
-            tmp(i,j) /= 11.0;
-        }
-    }
+// /**
+//  * Simple box filter with extra weight on the center element.
+//  * Blurs the image to make it more realistic.
+//  */
+// template<typename T>
+// Image<T> box_blur(const Image<T>& img){
+//     Image<T> tmp(img.get_xDim(), img.get_yDim());
+//     clear(tmp);
+//     for(int i = 4; i < img.get_xDim() - 4; i++){
+//         for(int j = 4; j < img.get_yDim() - 4; j++){
+//             tmp(i,j) = img(i-1, j-1) + img(i, j-1) + img(i+1, j-1) +
+//                        img(i-1, j) + 3.0*img(i, j) + img(i+1, j) + 
+//                        img(i-1, j+1) + img(i, j+1) + img(i+1, j+1);
+//             tmp(i,j) /= 11.0;
+//         }
+//     }
 
-    return tmp;
-}
+//     return tmp;
+// }
 
 
 int main()
@@ -106,36 +105,36 @@ int main()
     while (1) {
         BSP_TS_GetState(&TS_State);
         if(trigger_inference){
+          
+            Image<float> smallImage = resize(*img, 28, 28);
 
-            Image<float> smallImage = resize(*img, 64, 64);
 
-
-            Image<float> chopped = chop(smallImage);
-            printf("Done chopping\n\n");
-            Image<float> img20   = resize(chopped, 20, 20);
-            printf("Done resizing\n\n");
-            Image<float> img28   = pad(img20, 4, 4);
-
+            // Image<float> chopped = chop(smallImage);
+            // pc.printf("Done chopping\n\n");
+            // Image<float> img20   = resize(chopped, 20, 20);
+            // pc.printf("Done resizing\n\n");
+            // Image<float> img28   = pad(img20, 4, 4);
+            
             // Image processing is heavy on constrained devices
             // manually delete
-            printf("Done padding\n\n");
-            smallImage.~Image<float>();
-            chopped.~Image<float>();
-            img20.~Image<float>();
+            pc.printf("Done padding\n\n");
+            // smallImage.~Image<float>();
+            // chopped.~Image<float>();
+            // img20.~Image<float>();
             delete img;
 
-            Image<float> img28_2 = box_blur(img28);
-            printf("Done blurring\n\r");
-            img28.~Image<float>();
+            // Image<float> img28_2 = box_blur(smallImage);
+            // pc.printf("Done blurring\n\r");
+            // img28.~Image<float>();
 
-            printf("Reshaping\n\r");
-            img28_2.get_data()->resize({1, 784});
-            printf("Creating Graph\n\r");
+            pc.printf("Reshaping\n\r");
+            smallImage.get_data()->resize({1, 784});
+            pc.printf("Creating Graph\n\r");
 
-            get_deep_mlp_ctx(ctx, img28_2.get_data());
-            printf("Evaluating\n\r");
+            get_deep_mlp_ctx(ctx, smallImage.get_data());
+            pc.printf("Evaluating\n\r");
             ctx.eval();
-            S_TENSOR prediction = ctx.get({"y_pred:0"});
+            S_TENSOR prediction = ctx.get({"OutputLayer/y_pred:0"});
             int result = *(prediction->read<int>(0,0));
 
             printf("Number guessed %d\n\r", result);
@@ -143,8 +142,11 @@ int main()
             BSP_LCD_Clear(LCD_COLOR_WHITE);
             BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
             BSP_LCD_SetFont(&Font24);
+
+            // Create a cstring
             uint8_t number[2];
-            number[1] = 0;
+            number[1] = '\0';
+            //ASCII numbers are 48 + the number, a neat trick
             number[0] = 48 + result;
             BSP_LCD_DisplayStringAt(0, 120, number, CENTER_MODE);
             trigger_inference = false;
