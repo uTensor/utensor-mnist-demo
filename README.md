@@ -39,20 +39,12 @@ In preparation for code generation, you must freeze the TensorFlow model. Freezi
 
 
 1. Train the tensorflow model
-  - 1. Launch IPython `jupyter notebook` ![Launch the notebook](https://github.com/uTensor/utensor-mnist-demo/blob/master/docs/images/jupyter.png)
-  - 1. Open the `tensorflow-models/deep_mlp.ipynb`	+  2. run `python deep_mlp.py`
-  - 1. Select `Kernel/Restart & Run All`. This will build a 2 layer NN then train, quantize, and saves the model in `tensorflow-models/my-model/deep_mlp.pb`.
-  - ![Run the IPython notebook](https://github.com/uTensor/utensor-mnist-demo/blob/master/docs/images/kernel.png)
+  1. Launch IPython `jupyter notebook` ![Launch the notebook](https://github.com/uTensor/utensor-mnist-demo/blob/master/docs/images/jupyter.png)
+  1. Open the `tensorflow-models/deep_mlp.ipynb`
+  1. Select `Kernel/Restart & Run All`. This will build a 2 layer NN then train, quantize, and save the model in `tensorflow-models/mnist_model/deep_mlp.pb`.
+  ![Run the IPython notebook](https://github.com/uTensor/utensor-mnist-demo/blob/master/docs/images/kernel.png)
+  1. go back to project root directory
 
-- Train the tensorflow model
-  1. go to `tensorflow-models/`
-  2. run `python deep_mlp.py`
-    - `python deep_mlp.py -h` for help
-  3. training process should start immediately
-  <img alt=train-mlp src=docs/images/train_mlp.png width=400/>
-
-  4. the output pb file will be `mnist_model/deep_mlp.pb`
-  5. go back to project root directory
 
 ### Generate embedded C++ code
 
