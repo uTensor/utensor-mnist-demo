@@ -15,7 +15,7 @@ Running artificial intelligence on embedded systems involves 3 main steps.
 1. build embedded applications that call these functions to make informed decisions.
 
 ## Requirements
-- DISCO_F413ZH
+- [DISCO_F413ZH](https://os.mbed.com/platforms/ST-Discovery-F413H/)
 - SD Card (see SD card section)
 - [mbed-cli](https://os.mbed.com/docs/v5.7/tools/installation-and-setup.html)
 - [uTensor-cli](https://github.com/uTensor/utensor_cgen) `pip install utensor-cgen`
