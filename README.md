@@ -53,7 +53,7 @@ In preparation for code generation, you must freeze the TensorFlow model. Freezi
 You can get the output node names from the IPython notebook. This will create a `models` and `constants` directory. `models` contains the embedded code interface for making inferences in your applications, and `constants` contains the *learned* weights associated with each stage in the neural net.
 
 ```
-utensor-cli --output-nodes=OutputLayer/y_pred tensorflow-models/mnist_model/deep_mlp.pb
+utensor-cli tensorflow-models/mnist_model/deep_mlp.pb
 ```
 ### Prepare the mbed project
 This example builds a handwriting recognition application using Mbed and the generated model, but you can apply these concepts to your own projects and platforms. This example uses the **ST-Discovery-F413H** because it has a touch screen and SD card built in, but you could just as easily build the application using plug-in components.
