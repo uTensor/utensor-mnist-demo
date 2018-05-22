@@ -36,7 +36,9 @@ Running artificial intelligence on embedded systems involves 3 main steps.
 mbed import https://github.com/uTensor/utensor-mnist-demo
 ```
 
-### Train the model (Optional)
+### Train the model
+*Note*: The repository contains reference model files. You may choose to skip to the **Prepare the mbed project** section. 
+
 The process of training and validating the model is exactly the same as in traditional machine learning workflows. This example trains a fully connected neural net with two hidden layers to recognize handwritten digits from the MNIST dataset, but you can apply the concepts to an application of your choice.
 
 In preparation for code generation, you must freeze the TensorFlow model. Freezing a model stores learned graph parameters in a protobuf file.
