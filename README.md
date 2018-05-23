@@ -23,9 +23,12 @@ Running artificial intelligence on embedded systems involves 3 main steps.
 - [Jupyter Notebook](http://jupyter.org/) `pip install jupyter`
 
 ### Note for Windows users
-*NOTE*: Windows is not currently supported, but there is a workaround. If you are running Windows then you must have both Python2 and Python3 installed. Tensorflow 1.2+ does not support Python 2.7 on Windows, and only officially supports Python 3.5 and 3.6. Meanwhile, mbed officially supports Python2 and has limited support for Python3.
-You can get the demo working by running the Ipython notebook with the Python3 kernel, and the mbed project build with Python2.
+*NOTE*: Windows is not currently supported; here are two workarounds:
 
+
+1. If you are running Windows then you must have both Python2 and Python3 installed. Tensorflow 1.2+ does not support Python 2.7 on Windows, and only officially supports Python 3.5 and 3.6. Meanwhile, mbed officially supports Python2 and has limited support for Python3. You can get the demo working by running the Ipython notebook with the Python3 kernel, and the mbed project build with Python2.
+
+1. Use the [Cloud9 Environment](https://github.com/uTensor/cloud9-installer)
 
 ## Build Instruction
 1. Import the project:
@@ -34,6 +37,8 @@ mbed import https://github.com/uTensor/utensor-mnist-demo
 ```
 
 ### Train the model
+*Note*: The repository contains reference model files. You may choose to skip to the **Prepare the mbed project** section. 
+
 The process of training and validating the model is exactly the same as in traditional machine learning workflows. This example trains a fully connected neural net with two hidden layers to recognize handwritten digits from the MNIST dataset, but you can apply the concepts to an application of your choice.
 
 In preparation for code generation, you must freeze the TensorFlow model. Freezing a model stores learned graph parameters in a protobuf file.
@@ -53,7 +58,8 @@ In preparation for code generation, you must freeze the TensorFlow model. Freezi
 You can get the output node names from the IPython notebook. This will create a `models` and `constants` directory. `models` contains the embedded code interface for making inferences in your applications, and `constants` contains the *learned* weights associated with each stage in the neural net.
 
 ```
-utensor-cli tensorflow-models/mnist_model/deep_mlp.pb
+# from project root, run:
+utensor-cli tensorflow-models/mnist_model/deep_mlp.pb --output-nodes=y_pred
 ```
 ### Prepare the mbed project
 This example builds a handwriting recognition application using Mbed and the generated model, but you can apply these concepts to your own projects and platforms. This example uses the **ST-Discovery-F413H** because it has a touch screen and SD card built in, but you could just as easily build the application using plug-in components.
