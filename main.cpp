@@ -6,10 +6,11 @@
 #include "image.h"
 #include "models/deep_mlp.hpp"
 
+Serial pc(USBTX, USBRX, 115200);
+
 #ifndef TARGET_SIMULATOR
 #include "FATFileSystem.h"
 #include "F413ZH_SD_BlockDevice.h"
-Serial pc(USBTX, USBRX, 115200);
 F413ZH_SD_BlockDevice bd;
 FATFileSystem fs("fs");
 #else
