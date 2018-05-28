@@ -1,12 +1,14 @@
 {
     "compiler-args": [
         "-std=c++11",
-        "--preload-file", "sdcard@/fs"
+        "--preload-file", "sdcard@/fs",
+        "--preload-file", "constants@/fs/constants"
     ],
     "emterpretify": true,
     "ignore": [
         "./BSP_DISCO_F413ZH",
-        "./F413ZH_SD_BlockDevice"
+        "./F413ZH_SD_BlockDevice",
+        "./utensor/sd-driver/"
     ],
     "peripherals": [
         { "component": "ST7789H2", "args": {} }
