@@ -3,6 +3,8 @@ uTensor reduces AI-inference cost significantly, bringing AI to Cortex M devices
 
 This tutorial discusses at a high level what TensorFlow graphs are and how to start using uTensor to build a handwriting recognition application. This involves training a fully-connected neural network on the MNIST dataset on a host machine, generating embedded code, and building an mbed application that classifies handwritten digits based on user input.
 
+![Fully connected 2 layer NN](https://raw.githubusercontent.com/dmlc/web-data/master/mxnet/image/mlp_mnist.png)
+
 ## Introduction
 TensorFlow is an open-source software library for numerical computation using data flow graphs. Nodes in the graph represent mathematical operations, and the graph edges represent tensors, a type of multidimensional data array. 
 
@@ -53,7 +55,6 @@ In preparation for code generation, you must freeze the TensorFlow model. Freezi
 
 *Note* If you prefer traditional Python scripts rather than notebooks, check out `tensorflow-models/deep_mlp.py`. This script contains all the same code as the notebook.
 
-![Fully connected 2 layer NN](https://raw.githubusercontent.com/dmlc/web-data/master/mxnet/image/mlp_mnist.png)
 ### Generate embedded C++ code
 
 You can get the output node names from the IPython notebook. This will create a `models` and `constants` directory. `models` contains the embedded code interface for making inferences in your applications, and `constants` contains the *learned* weights associated with each stage in the neural net.
