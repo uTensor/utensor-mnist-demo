@@ -53,6 +53,7 @@ In preparation for code generation, you must freeze the TensorFlow model. Freezi
 
 *Note* If you prefer traditional Python scripts rather than notebooks, check out `tensorflow-models/deep_mlp.py`. This script contains all the same code as the notebook.
 
+![Fully connected 2 layer NN](https://raw.githubusercontent.com/dmlc/web-data/master/mxnet/image/mlp_mnist.png)
 ### Generate embedded C++ code
 
 You can get the output node names from the IPython notebook. This will create a `models` and `constants` directory. `models` contains the embedded code interface for making inferences in your applications, and `constants` contains the *learned* weights associated with each stage in the neural net.
