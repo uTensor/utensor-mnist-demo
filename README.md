@@ -46,7 +46,7 @@ The process of training and validating the model is exactly the same as in tradi
 In preparation for code generation, you must freeze the TensorFlow model. Freezing a model stores learned graph parameters in a protobuf file.
 
 
-1. Train the tTnsorflow model
+1. Train the Tensorflow model
   1. Launch IPython `jupyter notebook` ![Launch the notebook](https://github.com/uTensor/utensor-mnist-demo/blob/master/docs/images/jupyter.png)
   1. Open the `tensorflow-models/deep_mlp.ipynb`
   1. Select `Kernel/Restart & Run All`. This will build a 2 layer NN then train, quantize, and save the model in `tensorflow-models/mnist_model/deep_mlp.pb`.
