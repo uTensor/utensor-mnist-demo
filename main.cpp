@@ -45,25 +45,25 @@ void printImage(const Image<T>& img){
     }
 }
 
-// /**
-//  * Simple box filter with extra weight on the center element.
-//  * Blurs the image to make it more realistic.
-//  */
-// template<typename T>
-// Image<T> box_blur(const Image<T>& img){
-//     Image<T> tmp(img.get_xDim(), img.get_yDim());
-//     clear(tmp);
-//     for(int i = 4; i < img.get_xDim() - 4; i++){
-//         for(int j = 4; j < img.get_yDim() - 4; j++){
-//             tmp(i,j) = img(i-1, j-1) + img(i, j-1) + img(i+1, j-1) +
-//                        img(i-1, j) + 3.0*img(i, j) + img(i+1, j) + 
-//                        img(i-1, j+1) + img(i, j+1) + img(i+1, j+1);
-//             tmp(i,j) /= 11.0;
-//         }
-//     }
+ /**
+  * Simple box filter with extra weight on the center element.
+  * Blurs the image to make it more realistic.
+  */
+ template<typename T>
+ Image<T> box_blur(const Image<T>& img){
+     Image<T> tmp(img.get_xDim(), img.get_yDim());
+     clear(tmp);
+     for(int i = 4; i < img.get_xDim() - 4; i++){
+         for(int j = 4; j < img.get_yDim() - 4; j++){
+             tmp(i,j) = img(i-1, j-1) + img(i, j-1) + img(i+1, j-1) +
+                        img(i-1, j) + 3.0*img(i, j) + img(i+1, j) + 
+                        img(i-1, j+1) + img(i, j+1) + img(i+1, j+1);
+             tmp(i,j) /= 11.0;
+         }
+     }
 
-//     return tmp;
-// }
+     return tmp;
+ }
 
 
 int main()
@@ -110,29 +110,29 @@ int main()
             Image<float> smallImage = resize(*img, 28, 28);
 
 
-            // Image<float> chopped = chop(smallImage);
-            // pc.printf("Done chopping\n\n");
-            // Image<float> img20   = resize(chopped, 20, 20);
-            // pc.printf("Done resizing\n\n");
-            // Image<float> img28   = pad(img20, 4, 4);
+            Image<float> chopped = chop(smallImage);
+            pc.printf("Done chopping\n\n");
+            Image<float> img20   = resize(chopped, 20, 20);
+            pc.printf("Done resizing\n\n");
+            Image<float> img28   = pad(img20, 4, 4);
             
             // Image processing is heavy on constrained devices
             // manually delete
             pc.printf("Done padding\n\n");
-            // smallImage.~Image<float>();
-            // chopped.~Image<float>();
-            // img20.~Image<float>();
+            smallImage.~Image<float>();
+            chopped.~Image<float>();
+            img20.~Image<float>();
             delete img;
 
-            // Image<float> img28_2 = box_blur(smallImage);
-            // pc.printf("Done blurring\n\r");
-            // img28.~Image<float>();
+            Image<float> img28_2 = box_blur(img28);
+            pc.printf("Done blurring\n\r");
+            img28.~Image<float>();
 
             pc.printf("Reshaping\n\r");
-            smallImage.get_data()->resize({1, 784});
+            img28_2.get_data()->resize({1, 784});
             pc.printf("Creating Graph\n\r");
 
-            get_deep_mlp_ctx(ctx, smallImage.get_data());
+            get_deep_mlp_ctx(ctx, img28_2.get_data());
             pc.printf("Evaluating\n\r");
             ctx.eval();
             S_TENSOR prediction = ctx.get({"y_pred:0"});
