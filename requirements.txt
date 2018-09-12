@@ -1,0 +1,2 @@
+-e git+git@github.com:uTensor/utensor_cgen.git@1e92b6c98f782665814833a70747cadf157d4336#egg=utensor_cgen
+jupyter
