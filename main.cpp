@@ -2,15 +2,20 @@
 #include "stm32f413h_discovery.h"
 #include "stm32f413h_discovery_ts.h"
 #include "stm32f413h_discovery_lcd.h"
-#include "FATFileSystem.h"
-#include "F413ZH_SD_BlockDevice.h"
-#include "uTensor/core/tensor.hpp"
+#include "tensor.hpp"
 #include "image.h"
 #include "models/deep_mlp.hpp"
 
 Serial pc(USBTX, USBRX, 115200);
+
+#ifndef TARGET_SIMULATOR
+#include "FATFileSystem.h"
+#include "F413ZH_SD_BlockDevice.h"
 F413ZH_SD_BlockDevice bd;
 FATFileSystem fs("fs");
+#else
+#define USER_BUTTON     BUTTON1
+#endif
 
 InterruptIn button(USER_BUTTON);
 
@@ -25,7 +30,7 @@ void clear(Image<T>& img){
     for(int i = 0; i < img.get_xDim(); i++){
         for(int j = 0; j < img.get_yDim(); j++){
             img(i,j) = 0;
-        }   
+        }
     }
 }
 
@@ -34,9 +39,9 @@ void printImage(const Image<T>& img){
 
     for(int i = 0; i < img.get_xDim(); i++){
         for(int j = 0; j < img.get_yDim(); j++){
-            pc.printf("%f, ", img(i,j));
+            printf("%f, ", img(i,j));
         }
-        pc.printf("]\n\r");
+        printf("]\n\r");
     }
 }
 
@@ -64,10 +69,15 @@ void printImage(const Image<T>& img){
 int main()
 {
     uint16_t x1, y1;
-    pc.printf("program start...\r\n");
+    printf("uTensor deep learning character recognition demo\n");
+    printf("https://github.com/uTensor/utensor-mnist-demo\n");
+    printf("Draw a number (0-9) on the touch screen, and press the button...\r\n");
 
+#ifndef TARGET_SIMULATOR
     ON_ERR(bd.init(), "SDBlockDevice init ");
     ON_ERR(fs.mount(&bd), "Mounting the filesystem on \"/fs\". ");
+#endif
+
     Image<float>* img = new Image<float>(240, 240);
 
     BSP_LCD_Init();
@@ -96,7 +106,7 @@ int main()
     while (1) {
         BSP_TS_GetState(&TS_State);
         if(trigger_inference){
-            
+          
             Image<float> smallImage = resize(*img, 28, 28);
 
 
@@ -127,8 +137,8 @@ int main()
             ctx.eval();
             S_TENSOR prediction = ctx.get({"y_pred:0"});
             int result = *(prediction->read<int>(0,0));
-            
-            pc.printf("Number guessed %d\n\r", result);
+
+            printf("Number guessed %d\n\r", result);
 
             BSP_LCD_Clear(LCD_COLOR_WHITE);
             BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -151,7 +161,7 @@ int main()
             /* Get X and Y position of the first touch post calibrated */
             x1 = TS_State.touchX[0];
             y1 = TS_State.touchY[0];
-            
+
             img->draw_circle(x1, y1, 7); //Screen not in image x,y format. Must transpose
 
             BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
@@ -160,7 +170,4 @@ int main()
             wait_ms(5);
         }
     }
-
-    ON_ERR(fs.unmount(), "fs unmount ");
-    ON_ERR(bd.deinit(), "SDBlockDevice de-init ");
 }
