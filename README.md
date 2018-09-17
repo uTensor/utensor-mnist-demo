@@ -18,7 +18,7 @@ Running artificial intelligence on embedded systems involves 3 main steps.
 
 ## Requirements
 - [DISCO_F413ZH](https://os.mbed.com/platforms/ST-Discovery-F413H/)
-- SD Card (see SD card section)
+- (Optional) SD Card (see SD card section)
 - [mbed-cli](https://os.mbed.com/docs/v5.7/tools/installation-and-setup.html)
 - [uTensor-cli](https://github.com/uTensor/utensor_cgen) `pip install utensor-cgen`
 - [Tensorflow 1.6+](https://www.tensorflow.org/install)
@@ -57,16 +57,16 @@ In preparation for code generation, you must freeze the TensorFlow model. Freezi
 
 ### Generate embedded C++ code
 
-You can get the output node names from the IPython notebook. This will create a `models` and `constants` directory. `models` contains the embedded code interface for making inferences in your applications, and `constants` contains the *learned* weights associated with each stage in the neural net.
+You can get the output node names from the IPython notebook. This will create a `models` and optional `constants` directory. `models` contains the embedded code interface for making inferences in your applications, and `constants` contains the *learned* weights associated with each stage in the neural net. Note, constants will not be generated if `--transform-methods` includes the `inline` field as this will generate a model that fits in ROM. 
 
 ```
 # from project root, run:
-utensor-cli tensorflow-models/mnist_model/deep_mlp.pb --output-nodes=y_pred
+utensor-cli tensorflow-models/mnist_model/deep_mlp.pb --output-nodes=y_pred --transform-methods=quantize,inline
 ```
 ### Prepare the mbed project
 This example builds a handwriting recognition application using Mbed and the generated model, but you can apply these concepts to your own projects and platforms. This example uses the **ST-Discovery-F413H** because it has a touch screen and SD card built in, but you could just as easily build the application using plug-in components.
 
-1. Copy the constants folder to your SD card, and insert SD card in board.
+1. (Optional) Copy the constants folder to your SD card, and insert SD card in board.
 1. Run `mbed deploy`, this fetches the necessary libraries like uTensor
 1. Build the mbed project:
   ```

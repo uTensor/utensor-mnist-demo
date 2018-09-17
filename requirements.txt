@@ -1,2 +1,3 @@
--e git+git@github.com:uTensor/utensor_cgen.git@1e92b6c98f782665814833a70747cadf157d4336#egg=utensor_cgen
+-e git+git@github.com:uTensor/utensor_cgen.git@367735d3b5f4f4fac7b4a84aceb1c6593f964460#egg=utensor_cgen
 jupyter
+mbed-cli
