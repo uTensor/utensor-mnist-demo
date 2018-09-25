@@ -57,11 +57,11 @@ In preparation for code generation, you must freeze the TensorFlow model. Freezi
 
 ### Generate embedded C++ code
 
-You can get the output node names from the IPython notebook. This will create a `models` directory. The `models` contains the embedded code interface for making inferences in your applications and relevant C++ source code associated with the *learned* weights and architecture of the neural net.
+You can get the output node names from the IPython notebook. This will create a `models` directory. The `models` contains the embedded code interface for making inferences in your applications and relevant C++ source code associated with the *learned* weights and architecture of the neural net. Please refer to the [uTensor-cli](https://github.com/uTensor/utensor_cgen) for installation and usage instructions.
 
 ```
 # from project root, run:
-$ utensor-cli convert tensorflow-models/mnist_model/deep_mlp.pb --output-nodes=y_pred --transform-methods=quantize,inline
+$ utensor-cli convert tensorflow-models/mnist_model/deep_mlp.pb --output-nodes=y_pred
 ```
 ### Prepare the mbed project
 This example builds a handwriting recognition application using Mbed and the generated model, but you can apply these concepts to your own projects and platforms. This example uses the **ST-Discovery-F413H** because it has a touch screen and SD card built in, but you could just as easily build the application using plug-in components.
