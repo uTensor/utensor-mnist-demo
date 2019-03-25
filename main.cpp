@@ -8,12 +8,7 @@
 
 Serial pc(USBTX, USBRX, 115200);
 
-#ifndef TARGET_SIMULATOR
-#include "FATFileSystem.h"
-#include "F413ZH_SD_BlockDevice.h"
-F413ZH_SD_BlockDevice bd;
-FATFileSystem fs("fs");
-#else
+#ifdef TARGET_SIMULATOR
 #define USER_BUTTON     BUTTON1
 #endif
 
@@ -45,27 +40,6 @@ void printImage(const Image<T>& img){
     }
 }
 
-// /**
-//  * Simple box filter with extra weight on the center element.
-//  * Blurs the image to make it more realistic.
-//  */
-// template<typename T>
-// Image<T> box_blur(const Image<T>& img){
-//     Image<T> tmp(img.get_xDim(), img.get_yDim());
-//     clear(tmp);
-//     for(int i = 4; i < img.get_xDim() - 4; i++){
-//         for(int j = 4; j < img.get_yDim() - 4; j++){
-//             tmp(i,j) = img(i-1, j-1) + img(i, j-1) + img(i+1, j-1) +
-//                        img(i-1, j) + 3.0*img(i, j) + img(i+1, j) + 
-//                        img(i-1, j+1) + img(i, j+1) + img(i+1, j+1);
-//             tmp(i,j) /= 11.0;
-//         }
-//     }
-
-//     return tmp;
-// }
-
-
 int main()
 {
     uint16_t x1, y1;
@@ -73,10 +47,6 @@ int main()
     printf("https://github.com/uTensor/utensor-mnist-demo\n");
     printf("Draw a number (0-9) on the touch screen, and press the button...\r\n");
 
-#ifndef TARGET_SIMULATOR
-    ON_ERR(bd.init(), "SDBlockDevice init ");
-    ON_ERR(fs.mount(&bd), "Mounting the filesystem on \"/fs\". ");
-#endif
 
     Image<float>* img = new Image<float>(240, 240);
 
@@ -91,14 +61,6 @@ int main()
     /* Clear the LCD */
     BSP_LCD_Clear(LCD_COLOR_WHITE);
 
-    /* Set Touchscreen Demo1 description */
-    //BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
-    //BSP_LCD_FillRect(0, 0, BSP_LCD_GetXSize(), 40);
-    //BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    //BSP_LCD_SetBackColor(LCD_COLOR_GREEN);
-    //BSP_LCD_SetFont(&Font16);
-    //BSP_LCD_DisplayStringAt(0, 15, (uint8_t *)"Touch the screen", CENTER_MODE);
-
     Context ctx;
     clear(*img);
 
@@ -109,24 +71,8 @@ int main()
           
             Image<float> smallImage = resize(*img, 28, 28);
 
-
-            // Image<float> chopped = chop(smallImage);
-            // pc.printf("Done chopping\n\n");
-            // Image<float> img20   = resize(chopped, 20, 20);
-            // pc.printf("Done resizing\n\n");
-            // Image<float> img28   = pad(img20, 4, 4);
-            
-            // Image processing is heavy on constrained devices
-            // manually delete
             pc.printf("Done padding\n\n");
-            // smallImage.~Image<float>();
-            // chopped.~Image<float>();
-            // img20.~Image<float>();
             delete img;
-
-            // Image<float> img28_2 = box_blur(smallImage);
-            // pc.printf("Done blurring\n\r");
-            // img28.~Image<float>();
 
             pc.printf("Reshaping\n\r");
             smallImage.get_data()->resize({1, 784});
