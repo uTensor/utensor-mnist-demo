@@ -20,7 +20,7 @@ class Image {
 
 		Image(uint32_t x, uint32_t y){
 			data = new TENSOR<T>();
-			std::vector<uint32_t> tmp({x, y});
+			TensorShape tmp({x, y});
 			data->init(tmp);
 		}
 		Image(Tensor* that): data(that){}
