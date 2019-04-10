@@ -4,7 +4,7 @@
 #include <vector>
 #include "uTensor/core/tensor.hpp"
 
-template<typename T, template<typename> typename TENSOR=RamTensor>
+template<typename T, template<typename> class TENSOR=RamTensor>
 class Image {
 	private:
 		Tensor* data;
