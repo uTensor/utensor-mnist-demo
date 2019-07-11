@@ -74,8 +74,10 @@ int main()
     printf("Draw a number (0-9) on the touch screen, and press the button...\r\n");
 
 #ifndef TARGET_SIMULATOR
+#ifdef MBED_CONF_APP_USE_FS
     ON_ERR(bd.init(), "SDBlockDevice init ");
     ON_ERR(fs.mount(&bd), "Mounting the filesystem on \"/fs\". ");
+#endif
 #endif
 
     Image<float>* img = new Image<float>(240, 240);
