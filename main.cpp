@@ -97,9 +97,7 @@ int main()
             number[0] = 48 + result;
             BSP_LCD_DisplayStringAt(0, 120, number, CENTER_MODE);
             trigger_inference = false;
-            img = new Image<float>(240, 240);
-            clear(*img);
-            break;
+            exit(0);
         }
         if(TS_State.touchDetected) {
             /* One or dual touch have been detected          */
