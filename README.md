@@ -70,7 +70,7 @@ This example builds a handwriting recognition application using Mbed and the gen
 1. Build the mbed project:
 
     ```
-    $ mbed compile -m DISCO_F413ZH -t GCC_ARM --profile=uTensor/build_profile/release.json
+    $ mbed compile -m DISCO_F413ZH -t GCC_ARM
     ```
 
 1. Finally flash your device by dragging and dropping the binary from `BUILD/DISCO_F413ZH/GCC_ARM/utensor-mnist-demo.bin` to your device.

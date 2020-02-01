@@ -37,4 +37,4 @@ venv
 # misc
 mnist_data
 chkps
-*_model
+.*_checkpoints
